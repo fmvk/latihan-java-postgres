@@ -22,17 +22,30 @@ import java.util.stream.Collectors;
 //SpringIoC
 //JavaStream
 //Advanced Native SQL Query
+//AOP
 @Service
 public class UserService{
+
+    private final UserRepo userRepo;
+
     @Autowired
-    private UserRepo userRepo;
-    public int saveUser(User user){
-        return userRepo.save(user);
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
-    public List<User> getAllUsers(){
-        return userRepo.findAll();
+    public List<User> getAllUsers() {
+        System.out.println("Logging sebelum getAllUsers()");
+        List<User> user = userRepo.findAll();
+        System.out.println("Logging setelah getAllUsers()");
+        return user;
     }
+
+    public void saveUser(User user) {
+        System.out.println("Logging sebelum saveUser()");
+        userRepo.save(user);
+        System.out.println("Logging setelah saveUser()");
+    }
+
     public User getUserById(Long id) {
         return userRepo.findById(id);
     }
